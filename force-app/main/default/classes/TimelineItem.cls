@@ -1,3 +1,4 @@
+/*Timeline Item*/
 public class TimelineItem {
         @AuraEnabled
         public String itemId;
