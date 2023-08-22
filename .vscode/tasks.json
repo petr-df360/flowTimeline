@@ -1,0 +1,468 @@
+/*put into the .vscode folder ctrl shift B to execute*/
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "SFDX: Create ZIP based on package.xml",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:retrieve",
+                "-r",
+                "./${input:foldername}",
+                "-k",
+                "./${input:foldername}/package.xml"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "GIT Refresh remote branches",
+            "type": "shell",
+            "command": "git",
+            "args": [
+                "remote",
+                "update",
+                "origin",
+                "--prune",
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },¨
+        {
+            "label": "SFDX Pull Changes from Org",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:pull",
+                "--forceoverwrite",
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },¨
+        {
+            "label": "SFDX Reset Changes in Org",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:tracking:reset"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },¨
+        {
+            "label": "SFDX Clean Changes in Org",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:tracking:clean"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },¨
+        {
+            "label": "SFDX: Retrieve Metadata From Package",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:retrieve",
+                "-n",
+                "${input:packagename}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },¨
+        {
+            "label": "SFDX: Deploy Folder with Specific Test",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:deploy",
+                "-p",
+                "'./${input:foldername}'",
+                "-l",
+                "RunSpecifiedTests",
+                "-r",
+                "${input:testname}",
+                "-w",
+                "33",
+                "--verbose",
+                "--loglevel",
+                ,"fatal"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: 🚗 Deploy Folder",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:deploy",
+                "-p",
+                "'deploy'",
+                "-w",
+                "33",
+                "--verbose",
+                "--loglevel",
+                ,"fatal"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: Pull Changes",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:pull",
+                "--forceoverwrite",
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: 🚗Deploy TEST unpackaged.zip",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "-w",
+                "10",
+                "-c"
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⭐⭐ DEPLOY unpackaged.zip to ORG ",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "-u",
+                "${input:salesforceorganization}",
+                "-w",
+                "10",
+                "-l",
+                "RunSpecifiedTests",
+                "-r" 
+                "'not,a,test'",
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⭐⭐ TEST DEPLOY unpackaged.zip to ORG",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "--target-org",
+                "${input:salesforceorganization}",
+                "-w",
+                "10",
+                "-c",
+                "-l",
+                "RunSpecifiedTests",
+                "-r" 
+                "'not,a,test'",
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⭐⭐ TEST DEPLOY unpackaged.zip to ORG specify TEST",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "-u",
+                "${input:salesforceorganization}",
+                "-w",
+                "10",
+                "-c",
+                "-l",
+                "RunSpecifiedTests",
+                "-r" 
+                "${input:testname}",
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⭐⭐ DEPLOY unpackaged.zip to ORG specify TEST",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "-u",
+                "${input:salesforceorganization}",
+                "-w",
+                "10",
+                "-l",
+                "RunSpecifiedTests",
+                "-r" 
+                "${input:testname}",
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: TEST unpackaged.zip to ORG ⭐",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "-u",
+                "${input:salesforceorganization}",
+                "-w",
+                "10",
+                "-c",
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+
+        {
+            "label": "SFDX: Deploy TEST Package to Salesforce Organization ",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "${input:packagename}",
+                "-u",
+                "${input:salesforceorganization}",
+                "-w",
+                "10",
+                "-c"
+            ], 
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX:💥🚗Deploy unpackaged.zip to Salesforce Organization",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "changeset/unpackaged.zip",
+                "-w",
+                "10"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX:💥 Deploy Package to Salesforce Organization",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:deploy",
+                "-f",
+                "${input:packagename}",
+                "-u",
+                "${input:salesforceorganization}",
+                "-w",
+                "10"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: Retrieve Changeset From Salesforce Organization",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:retrieve",
+                "-r",
+                "changeset",
+                "-p",
+                "${input:packagename}",
+                "-u",
+                "${input:salesforceorganization}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "⭐⭐ SFDX: Retrieve Changeset",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:mdapi:retrieve",
+                "-r",
+                "changeset", 
+                "-p",
+                "${input:packagename}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: Export Data json",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:data:tree:export",
+                "-q",
+                "${input:soql}",
+                "-d",
+                "${input:foldername}",
+                "--plan"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: Import Data json",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:data:tree:import",
+                "-f",
+                "${input:foldername}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+
+    ],
+    "inputs": [
+        {
+            "id": "packagename",
+            "description": "PACKAGE:",
+            "type": "promptString"
+        },
+        {
+            "id": "testname",
+            "description": "TESTS :",
+            "type": "promptString"
+        },
+
+        {
+            "id": "foldername",
+            "description": "FOLDER:",
+            "type": "promptString"
+        },
+        {
+            "id": "salesforceorganization",
+            "description": "SALESFORCE:",
+            "type": "promptString"
+        },
+        {
+            "id": "soql",
+            "description": "SOQL:",
+            "type": "promptString"
+        }
+
+
+    ],
+
+}
+
+/* tree import to org
+sfdx force:data:tree:import -f ilovenag/Account.json -u jzaa1
+*/
